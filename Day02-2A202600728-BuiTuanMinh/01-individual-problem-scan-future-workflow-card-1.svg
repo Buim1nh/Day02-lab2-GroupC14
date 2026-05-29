@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 450">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4B5563" />
+    </marker>
+    <marker id="arrow-error" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#EF4444" />
+    </marker>
+  </defs>
+
+  <rect width="100%" height="100%" fill="#F9FAFB"/>
+
+  <text x="425" y="40" font-family="sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#1F2937">
+    AI AGENT VOD REVIEW WORKFLOW - FUTURE STATE (9 PHÚT)
+  </text>
+
+  <rect x="50" y="80" width="200" height="70" rx="8" fill="#FFFFFF" stroke="#3B82F6" stroke-width="2"/>
+  <text x="150" y="110" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#1F2937">Nhập liên kết VOD</text>
+  <text x="150" y="130" font-family="sans-serif" font-size="12" text-anchor="middle" fill="#6B7280">Thời gian: 1 phút</text>
+
+  <line x1="250" y1="115" x2="310" y2="115" stroke="#4B5563" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <rect x="320" y="80" width="480" height="70" rx="8" fill="#EFF6FF" stroke="#3B82F6" stroke-width="2"/>
+  <text x="560" y="110" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#1F2937">Agent quét dữ liệu toàn trận và lập bản đồ các biến số</text>
+  <text x="560" y="130" font-family="sans-serif" font-size="12" text-anchor="middle" fill="#6B7280">Thời gian: 3 phút</text>
+
+  <line x1="560" y1="150" x2="560" y2="200" stroke="#4B5563" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <rect x="320" y="210" width="480" height="70" rx="8" fill="#EFF6FF" stroke="#3B82F6" stroke-width="2"/>
+  <text x="560" y="240" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#1F2937">Agent phân tích logic hành vi và tạo báo cáo lý giải</text>
+  <text x="560" y="260" font-family="sans-serif" font-size="12" text-anchor="middle" fill="#6B7280">Thời gian: 2 phút</text>
+
+  <line x1="560" y1="280" x2="560" y2="330" stroke="#4B5563" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <rect x="320" y="340" width="480" height="70" rx="8" fill="#FCE7F3" stroke="#EC4899" stroke-width="2" stroke-dasharray="6,4"/>
+  <text x="560" y="370" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#1F2937">Đọc báo cáo giải thích chiến thuật trọng tâm</text>
+  <text x="560" y="390" font-family="sans-serif" font-size="12" text-anchor="middle" fill="#EC4899">Thời gian: 3 phút (Human Boundary)</text>
+
+  <line x1="320" y1="245" x2="260" y2="245" stroke="#EF4444" stroke-width="2" marker-end="url(#arrow-error)" stroke-dasharray="4,4"/>
+
+  <rect x="50" y="200" width="200" height="90" rx="8" fill="#FEF2F2" stroke="#EF4444" stroke-width="2"/>
+  <text x="150" y="230" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#B91C1C">Fallback</text>
+  <text x="150" y="250" font-family="sans-serif" font-size="12" text-anchor="middle" fill="#7F1D1D">AI không giải thích được,</text>
+  <text x="150" y="268" font-family="sans-serif" font-size="12" text-anchor="middle" fill="#7F1D1D">đánh dấu video tự phân tích</text>
+</svg>

@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 950 500">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4B5563" />
+    </marker>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2563EB" />
+    </marker>
+  </defs>
+
+  <rect width="100%" height="100%" fill="#F8FAFC"/>
+
+  <text x="475" y="40" font-family="sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#0F172A">
+    MÔ HÌNH KIẾN TRÚC GIẢI PHÁP AI AGENT PHÂN TÍCH VOD TFT
+  </text>
+
+  <rect x="30" y="200" width="160" height="100" rx="8" fill="#FFFFFF" stroke="#64748B" stroke-width="2"/>
+  <text x="110" y="240" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#0F172A">Video VOD Đầu Vào</text>
+  <text x="110" y="265" font-family="sans-serif" font-size="12" text-anchor="middle" fill="#475569">YouTube/Twitch URL</text>
+
+  <line x1="190" y1="250" x2="240" y2="250" stroke="#4B5563" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <rect x="250" y="80" width="450" height="380" rx="12" fill="#F1F5F9" stroke="#3B82F6" stroke-width="3" stroke-dasharray="8,4"/>
+  <text x="475" y="110" font-family="sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#1D4ED8">HỆ THỐNG AI AGENT ĐA PHÂN LỚP</text>
+
+  <rect x="280" y="130" width="390" height="70" rx="6" fill="#FFFFFF" stroke="#0EA5E9" stroke-width="2"/>
+  <text x="475" y="155" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#0F172A">1. Lớp Nhận Diện (Computer Vision &amp; OCR)</text>
+  <text x="475" y="175" font-family="sans-serif" font-size="12" text-anchor="middle" fill="#475569">Trích xuất thời gian thực: Vàng, Máu, Lõi, Tướng, Hàng chờ</text>
+
+  <rect x="280" y="230" width="390" height="70" rx="6" fill="#FFFFFF" stroke="#10B981" stroke-width="2"/>
+  <text x="475" y="255" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#0F172A">2. Lớp Dữ Liệu Nền (Knowledge Base)</text>
+  <text x="475" y="275" font-family="sans-serif" font-size="12" text-anchor="middle" fill="#475569">Cập nhật Patch, Tỉ lệ thắng đội hình, Quy tắc trò chơi</text>
+
+  <rect x="280" y="330" width="390" height="100" rx="6" fill="#FFFFFF" stroke="#8B5CF6" stroke-width="2"/>
+  <text x="475" y="355" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#0F172A">3. Lớp Suy Luận (Reasoning Engine)</text>
+  <text x="475" y="375" font-family="sans-serif" font-size="12" text-anchor="middle" fill="#475569">Phân tích đa biến số &amp; Suy luận ngược (Reverse Engineering)</text>
+  <text x="475" y="395" font-family="sans-serif" font-size="12" font-style="italic" text-anchor="middle" fill="#6B7280">Ví dụ logic: "Roll mạnh tại 3-2 vì lobby có 2 nhà trùng bài"</text>
+
+  <line x1="475" y1="200" x2="475" y2="220" stroke="#4B5563" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="475" y1="300" x2="475" y2="320" stroke="#4B5563" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <line x1="700" y1="250" x2="750" y2="250" stroke="#2563EB" stroke-width="3" marker-end="url(#arrow-blue)"/>
+
+  <rect x="760" y="200" width="160" height="100" rx="8" fill="#EFF6FF" stroke="#2563EB" stroke-width="2"/>
+  <text x="840" y="230" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#1E3A8A">Báo Cáo Chiến Thuật</text>
+  <text x="840" y="255" font-family="sans-serif" font-size="12" text-anchor="middle" fill="#3B82F6">- Video cắt mốc sự kiện</text>
+  <text x="840" y="275" font-family="sans-serif" font-size="12" text-anchor="middle" fill="#3B82F6">- Lý giải quyết định vĩ mô</text>
+</svg>
