@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slide Thuyết Trình: AI Agent Phân Tích VOD TFT</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        darkBg: '#090d16',
+                        darkCard: '#111827',
+                        cyberBlue: '#3b82f6',
+                        cyberCyan: '#06b6d4',
+                        cyberGreen: '#10b981',
+                        cyberRed: '#ef4444',
+                        cyberPurple: '#8b5cf6',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #05070c;
+            color: #f3f4f6;
+            overflow: hidden;
+        }
+        .slide {
+            display: none;
+            width: 100vw;
+            height: 100vh;
+            padding: 4rem 6rem;
+            position: relative;
+        }
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            animation: fadeIn 0.5s ease-in-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .grid-bg {
+            background-image: 
+                linear-gradient(rgba(18, 24, 38, 0.5) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(18, 24, 38, 0.5) 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-position: center;
+        }
+        .glow-cyan {
+            box-shadow: 0 0 25px rgba(6, 182, 212, 0.15);
+        }
+        .glow-red {
+            box-shadow: 0 0 25px rgba(239, 68, 68, 0.25);
+        }
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+    </style>
+</head>
+<body class="grid-bg min-h-screen relative select-none">
+
+    <!-- Top Navigation Bar -->
+    <header class="fixed top-0 left-0 right-0 h-16 z-50 px-8 flex justify-between items-center border-b border-white/5 glass-panel">
+        <div class="flex items-center gap-3">
+            <span class="w-3 h-3 rounded-full bg-cyberCyan animate-pulse"></span>
+            <span class="font-display font-bold tracking-wider text-sm text-cyberCyan">TFT VOD AI AGENT</span>
+        </div>
+        <div class="text-sm font-medium text-gray-400">
+            Slide <span id="current-slide-num">1</span>/<span id="total-slide-num">8</span>: <span id="slide-topic" class="text-white">Tổng quan</span>
+        </div>
+        <div class="flex items-center gap-4 text-xs text-gray-500">
+            <kbd class="px-2 py-1 bg-gray-800 rounded border border-gray-700">←</kbd>
+            <kbd class="px-2 py-1 bg-gray-800 rounded border border-gray-700">→</kbd>
+            <span>để chuyển slide</span>
+        </div>
+    </header>
+
+    <!-- MAIN SLIDE CONTAINER -->
+    <main class="w-full h-screen pt-16 pb-20">
+
+        <!-- SLIDE 1: Title & Hero Cover -->
+        <section class="slide active" data-topic="Cover">
+            <div class="absolute inset-0 flex items-center justify-center -z-10 opacity-30">
+                <div class="w-[500px] h-[500px] bg-cyberCyan/10 rounded-full blur-[120px]"></div>
+                <div class="w-[400px] h-[400px] bg-cyberPurple/10 rounded-full blur-[100px] -translate-x-1/2"></div>
+            </div>
+            
+            <div class="flex-1 flex flex-col justify-center items-center text-center max-w-5xl mx-auto">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyberCyan/10 border border-cyberCyan/30 text-cyberCyan mb-6 text-sm font-semibold tracking-wide">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> REVERSE ENGINEERING DECISION-MAKING
+                </div>
+                <h1 class="font-display text-6xl lg:text-7xl font-bold leading-tight tracking-tight mb-6">
+                    Hệ Thống <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyberCyan to-cyberBlue">AI Agent</span><br>Phân Tích VOD Đấu Trường Chân Lý
+                </h1>
+                <p class="text-lg text-gray-400 max-w-3xl mb-12">
+                    Nâng tầm tư duy chiến thuật thông qua công nghệ Computer Vision kết hợp Reasoning Engine - giúp chuyển đổi hàng giờ nghiên cứu VOD thủ công thành các báo cáo logic tức thời.
+                </p>
+                <div class="flex items-center gap-12 border-t border-white/10 pt-8 w-full justify-center">
+                    <div class="text-center">
+                        <div class="text-3xl font-display font-bold text-cyberCyan">45 Phút</div>
+                        <div class="text-xs text-gray-500 mt-1 uppercase tracking-wider">Thời gian xem thủ công</div>
+                    </div>
+                    <div class="h-8 w-px bg-white/10"></div>
+                    <div class="text-center">
+                        <div class="text-3xl font-display font-bold text-cyberGreen">9 Phút</div>
+                        <div class="text-xs text-gray-500 mt-1 uppercase tracking-wider">Phân tích với AI Agent</div>
+                    </div>
+                    <div class="h-8 w-px bg-white/10"></div>
+                    <div class="text-center">
+                        <div class="text-3xl font-display font-bold text-cyberPurple">> 90%</div>
+                        <div class="text-xs text-gray-500 mt-1 uppercase tracking-wider">Độ chính xác mốc thời gian</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 2: Bảng tóm tắt vấn đề và giải pháp -->
+        <section class="slide" data-topic="Bản Tóm Tắt">
+            <div>
+                <span class="text-xs text-cyberCyan font-bold tracking-widest uppercase">Overview</span>
+                <h2 class="font-display text-4xl font-bold mt-1">Tổng Quan Vấn Đề & Giải Pháp</h2>
+            </div>
+
+            <div class="grid grid-cols-12 gap-6 my-auto">
+                <!-- Cột trái: Vấn đề & Bối cảnh -->
+                <div class="col-span-7 flex flex-col gap-6">
+                    <div class="glass-panel rounded-2xl p-6 border-l-4 border-cyberRed/60">
+                        <div class="flex items-center gap-3 mb-3 text-cyberRed">
+                            <i class="fa-solid fa-circle-exclamation text-lg"></i>
+                            <h3 class="font-bold text-lg uppercase tracking-wide">VẤN ĐỀ (PROBLEM)</h3>
+                        </div>
+                        <p class="text-gray-300 leading-relaxed text-sm">
+                            Việc tự nghiên cứu VOD của tuyển thủ mất nhiều thời gian nhưng hiệu suất tiếp thu thấp do người xem chỉ quan sát được bề nổi thao tác (mua bán, xếp bài) mà thiếu đi dữ liệu bối cảnh toàn diện để hiểu rõ tư duy logic đằng sau các quyết định chiến thuật đột ngột.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="glass-panel rounded-xl p-5 border border-white/5">
+                            <h4 class="text-xs text-cyberCyan uppercase font-bold tracking-wider mb-2">ĐỐI TƯỢNG & BỐI CẢNH</h4>
+                            <ul class="text-xs text-gray-400 space-y-2">
+                                <li><strong class="text-gray-200">Actor:</strong> Game thủ TFT có nhu cầu nghiên cứu chiến thuật và nâng cao kỹ năng.</li>
+                                <li><strong class="text-gray-200">Bối cảnh:</strong> Tự phân tích meta, học hỏi thông qua video phát sóng từ các nền tảng lớn.</li>
+                            </ul>
+                        </div>
+                        <div class="glass-panel rounded-xl p-5 border border-white/5">
+                            <h4 class="text-xs text-cyberRed uppercase font-bold tracking-wider mb-2">NÚT THẮT & TÁC ĐỘNG</h4>
+                            <ul class="text-xs text-gray-400 space-y-2">
+                                <li><strong class="text-gray-200">Bottleneck:</strong> Việc tua video thủ công thiếu chính xác, dễ bỏ lỡ chi tiết và gây lãng phí thời gian.</li>
+                                <li><strong class="text-gray-200">Metric tối ưu:</strong> Giảm thời gian nghiên cứu từ 40 phút xuống dưới 5 phút.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cột phải: Giải pháp & Giả thuyết -->
+                <div class="col-span-5 flex flex-col justify-between glass-panel rounded-2xl p-6 border-t-4 border-cyberGreen/60">
+                    <div>
+                        <div class="flex items-center gap-3 mb-4 text-cyberGreen">
+                            <i class="fa-solid fa-robot text-lg"></i>
+                            <h3 class="font-bold text-lg uppercase tracking-wide">GIẢ THUYẾT AI AGENT</h3>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex gap-3">
+                                <span class="w-6 h-6 rounded-full bg-cyberGreen/10 border border-cyberGreen/30 text-cyberGreen flex items-center justify-center shrink-0 text-xs font-bold">1</span>
+                                <p class="text-sm text-gray-300">
+                                    Triển khai AI Agent kết hợp <strong class="text-white">Computer Vision</strong> liên tục theo dõi toàn bộ biến số: lượng vàng, chuỗi thắng/thua, trang bị hàng chờ, thông tin trinh sát.
+                                </p>
+                            </div>
+                            <div class="flex gap-3">
+                                <span class="w-6 h-6 rounded-full bg-cyberGreen/10 border border-cyberGreen/30 text-cyberGreen flex items-center justify-center shrink-0 text-xs font-bold">2</span>
+                                <p class="text-sm text-gray-300">
+                                    Thực hiện <strong class="text-white">Suy luận ngược (Reverse Engineering)</strong> để lý giải hành vi, tự động xuất chú giải nguyên nhân chiến thuật của tuyển thủ.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-6 bg-white/5 rounded-xl p-4 border border-white/5 text-xs text-gray-400 italic">
+                        <span class="text-cyberGreen font-bold not-italic">Ví dụ:</span> Giải thích lý do roll cạn tiền ở vòng 3-2 thay vì giữ lợi tức đến 4-1 dựa trên trạng thái sảnh đấu (lobby).
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 3: Current Workflow (Manual) -->
+        <section class="slide" data-topic="Luồng Hiện Tại">
+            <div>
+                <span class="text-xs text-cyberRed font-bold tracking-widest uppercase">Current State</span>
+                <h2 class="font-display text-4xl font-bold mt-1">Quy Trình Nghiên Cứu VOD Thủ Công (45 Phút)</h2>
+            </div>
+
+            <div class="my-auto max-w-4xl mx-auto w-full">
+                <div class="relative flex flex-col gap-6">
+                    <!-- Vertical Line for Workflow -->
+                    <div class="absolute left-6 top-6 bottom-6 w-0.5 bg-gradient-to-b from-gray-700 via-cyberRed/30 to-gray-700"></div>
+
+                    <!-- Step 1 -->
+                    <div class="flex gap-6 items-center relative pl-2">
+                        <div class="w-10 h-10 rounded-full bg-gray-800 border border-gray-600 flex items-center justify-center text-sm font-bold text-gray-400 z-10">1</div>
+                        <div class="flex-1 glass-panel rounded-xl p-4 flex justify-between items-center">
+                            <div>
+                                <h4 class="font-semibold text-gray-200">Tìm kiếm & mở video VOD</h4>
+                                <p class="text-xs text-gray-400 mt-1">Tru cập YouTube, Twitch hoặc web lưu trữ trận đấu</p>
+                            </div>
+                            <span class="px-3 py-1 rounded bg-gray-800/80 border border-gray-700 text-xs text-gray-400">Thời gian: 2 phút</span>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="flex gap-6 items-center relative pl-2">
+                        <div class="w-10 h-10 rounded-full bg-gray-800 border border-gray-600 flex items-center justify-center text-sm font-bold text-gray-400 z-10">2</div>
+                        <div class="flex-1 glass-panel rounded-xl p-4 flex justify-between items-center">
+                            <div>
+                                <h4 class="font-semibold text-gray-200">Tua qua các vòng đấu phụ</h4>
+                                <p class="text-xs text-gray-400 mt-1">Tua tìm mốc thời gian xảy ra biến động lớn (vòng quái hoặc round quyết định)</p>
+                            </div>
+                            <span class="px-3 py-1 rounded bg-gray-800/80 border border-gray-700 text-xs text-gray-400">Thời gian: 10 phút</span>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="flex gap-6 items-center relative pl-2">
+                        <div class="w-10 h-10 rounded-full bg-gray-800 border border-gray-600 flex items-center justify-center text-sm font-bold text-gray-400 z-10">3</div>
+                        <div class="flex-1 glass-panel rounded-xl p-4 flex justify-between items-center">
+                            <div>
+                                <h4 class="font-semibold text-gray-200">Ghi nhận thao tác bề nổi của tuyển thủ</h4>
+                                <p class="text-xs text-gray-400 mt-1">Quan sát các lượt mua bán, ghép đồ hoặc nâng cấp đội hình cơ bản</p>
+                            </div>
+                            <span class="px-3 py-1 rounded bg-gray-800/80 border border-gray-700 text-xs text-gray-400">Thời gian: 10 phút</span>
+                        </div>
+                    </div>
+
+                    <!-- Step 4 - BOTTLENECK -->
+                    <div class="flex gap-6 items-center relative pl-2">
+                        <div class="w-10 h-10 rounded-full bg-cyberRed/20 border border-cyberRed text-cyberRed flex items-center justify-center text-sm font-bold z-10 glow-red animate-pulse">4</div>
+                        <div class="flex-1 glass-panel rounded-xl p-4 border border-cyberRed/40 bg-cyberRed/5 flex justify-between items-center">
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <h4 class="font-bold text-white">Dừng video, tự quan sát bối cảnh và suy đoán lý do</h4>
+                                    <span class="px-2 py-0.5 rounded bg-cyberRed/20 border border-cyberRed/40 text-[10px] font-bold text-cyberRed uppercase tracking-wide">Nút Thắt</span>
+                                </div>
+                                <p class="text-xs text-gray-300 mt-1">Tự căn chỉnh mốc quan trọng (3-2, 4-2) và nỗ lực suy đoán tư duy của đối thủ</p>
+                            </div>
+                            <span class="px-3 py-1 rounded bg-cyberRed/20 border border-cyberRed/40 text-xs font-bold text-cyberRed">Thời gian: 15 phút (Bottleneck)</span>
+                        </div>
+                    </div>
+
+                    <!-- Step 5 -->
+                    <div class="flex gap-6 items-center relative pl-2">
+                        <div class="w-10 h-10 rounded-full bg-gray-800 border border-gray-600 flex items-center justify-center text-sm font-bold text-gray-400 z-10">5</div>
+                        <div class="flex-1 glass-panel rounded-xl p-4 flex justify-between items-center">
+                            <div>
+                                <h4 class="font-semibold text-gray-200">Rút ra kết luận và ghi chép chiến thuật</h4>
+                                <p class="text-xs text-gray-400 mt-1">Ghi chú lại bộ khung và logic xoay bài rút ra được</p>
+                            </div>
+                            <span class="px-3 py-1 rounded bg-gray-800/80 border border-gray-700 text-xs text-gray-400">Thời gian: 8 phút</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 4: Future Workflow (AI Agent) -->
+        <section class="slide" data-topic="Luồng Tương Lai">
+            <div>
+                <span class="text-xs text-cyberCyan font-bold tracking-widest uppercase">Future State</span>
+                <h2 class="font-display text-4xl font-bold mt-1">Quy Trình Với AI Agent (9 Phút)</h2>
+            </div>
+
+            <div class="my-auto grid grid-cols-12 gap-8 items-center max-w-5xl mx-auto w-full">
+                <!-- Sơ đồ quy trình -->
+                <div class="col-span-8 flex flex-col gap-6 relative">
+                    <div class="absolute left-[39px] top-6 bottom-6 w-0.5 bg-dashed border-l border-dashed border-cyberCyan/40"></div>
+
+                    <!-- Step 1 -->
+                    <div class="flex gap-6 items-start">
+                        <div class="w-20 h-10 rounded-lg bg-cyberCyan/10 border border-cyberCyan/30 flex items-center justify-center text-xs font-bold text-cyberCyan shrink-0 mt-1">
+                            1 PHÚT
+                        </div>
+                        <div class="flex-1 glass-panel rounded-xl p-4">
+                            <h4 class="font-bold text-white text-sm">Nhập liên kết VOD</h4>
+                            <p class="text-xs text-gray-400 mt-1">Người dùng chỉ cần dán URL từ Twitch/YouTube/Bilibili vào hệ thống.</p>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="flex gap-6 items-start">
+                        <div class="w-20 h-10 rounded-lg bg-cyberCyan/10 border border-cyberCyan/30 flex items-center justify-center text-xs font-bold text-cyberCyan shrink-0 mt-1">
+                            3 PHÚT
+                        </div>
+                        <div class="flex-1 glass-panel rounded-xl p-4 border border-cyberCyan/40 glow-cyan">
+                            <h4 class="font-bold text-cyberCyan text-sm">Agent quét dữ liệu toàn trận & Lập bản đồ biến số</h4>
+                            <p class="text-xs text-gray-300 mt-1">Computer Vision tracking tự động thu thập lượng vàng, trang bị, máu, mốc vòng đấu.</p>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="flex gap-6 items-start">
+                        <div class="w-20 h-10 rounded-lg bg-cyberCyan/10 border border-cyberCyan/30 flex items-center justify-center text-xs font-bold text-cyberCyan shrink-0 mt-1">
+                            2 PHÚT
+                        </div>
+                        <div class="flex-1 glass-panel rounded-xl p-4 relative">
+                            <h4 class="font-bold text-white text-sm">Agent phân tích logic hành vi và tạo báo cáo lý giải</h4>
+                            <p class="text-xs text-gray-400 mt-1">Suy luận ngược dựa trên cơ sở dữ liệu meta hiện tại và cấu trúc lobby để tìm nguyên nhân ra quyết định.</p>
+                            
+                            <!-- Fallback Line -->
+                            <div class="absolute right-[-40px] top-1/2 -translate-y-1/2 flex items-center gap-2 z-10">
+                                <span class="text-cyberRed font-bold text-lg">➔</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="flex gap-6 items-start">
+                        <div class="w-20 h-10 rounded-lg bg-cyberGreen/20 border border-cyberGreen/40 flex items-center justify-center text-xs font-bold text-cyberGreen shrink-0 mt-1">
+                            3 PHÚT
+                        </div>
+                        <div class="flex-1 glass-panel rounded-xl p-4 border border-cyberGreen/40 bg-cyberGreen/5">
+                            <h4 class="font-bold text-cyberGreen text-sm">Đọc báo cáo giải thích chiến thuật trọng tâm</h4>
+                            <p class="text-xs text-gray-300 mt-1"><span class="font-semibold text-white">Human Boundary:</span> Người dùng trực tiếp kiểm chứng, nắm vững bài học trong thời gian cực ngắn.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fallback Box & Info -->
+                <div class="col-span-4 flex flex-col gap-6">
+                    <div class="glass-panel border border-cyberRed/30 rounded-2xl p-5 bg-cyberRed/5">
+                        <div class="flex items-center gap-2 text-cyberRed font-bold text-sm mb-2 uppercase">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            <h4>LUỒNG PHÒNG HỜ (FALLBACK)</h4>
+                        </div>
+                        <p class="text-xs text-gray-300 leading-relaxed mb-3">
+                            Nếu AI gặp bối cảnh cực kỳ dị hoặc mâu thuẫn dữ liệu không thể lý giải chính xác:
+                        </p>
+                        <div class="p-3 bg-black/40 rounded-lg border border-white/5 text-xs text-gray-400">
+                            Hệ thống sẽ <strong class="text-white">đánh dấu đoạn video tự phân tích</strong> để người dùng tự điều tra bằng tay, tránh cung cấp thông tin sai lệch.
+                        </div>
+                    </div>
+
+                    <div class="p-5 rounded-2xl bg-cyberCyan/5 border border-cyberCyan/10 text-center">
+                        <span class="text-3xl font-display font-bold text-cyberGreen">80%</span>
+                        <p class="text-xs text-gray-400 mt-1">Tỷ lệ giảm thiểu thời gian phân tích</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 5: So sánh chi tiết trước và sau -->
+        <section class="slide" data-topic="So Sánh">
+            <div>
+                <span class="text-xs text-cyberCyan font-bold tracking-widest uppercase">Metrics</span>
+                <h2 class="font-display text-4xl font-bold mt-1">Hiệu Quả Chuyển Đổi Thực Tế</h2>
+            </div>
+
+            <div class="my-auto grid grid-cols-2 gap-8 max-w-5xl mx-auto w-full">
+                <!-- Trước (Manual) -->
+                <div class="glass-panel rounded-2xl p-6 border-t-2 border-cyberRed/30 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-6">
+                            <span class="px-3 py-1 rounded-full bg-cyberRed/10 border border-cyberRed/20 text-xs text-cyberRed font-bold uppercase tracking-wider">THỦ CÔNG (CURRENT)</span>
+                            <span class="text-2xl font-bold font-display text-cyberRed">45 Phút</span>
+                        </div>
+                        <div class="space-y-4 text-sm text-gray-400">
+                            <div class="flex gap-2">
+                                <span class="text-cyberRed">✗</span>
+                                <p>Phải tua đi tua lại thủ công cực kỳ tốn thời gian.</p>
+                            </div>
+                            <div class="flex gap-2">
+                                <span class="text-cyberRed">✗</span>
+                                <p>Chỉ nhìn thấy bề nổi thao tác (mua tướng gì, lắp đồ gì).</p>
+                            </div>
+                            <div class="flex gap-2">
+                                <span class="text-cyberRed">✗</span>
+                                <p>Khó theo dõi liên tục trạng thái của các đối thủ khác.</p>
+                            </div>
+                            <div class="flex gap-2">
+                                <span class="text-cyberRed">✗</span>
+                                <p>Không có dữ liệu đối chiếu meta tức thời dẫn đến phán đoán cảm tính.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="h-1 bg-cyberRed/20 rounded-full mt-6 overflow-hidden">
+                        <div class="h-full bg-cyberRed w-full"></div>
+                    </div>
+                </div>
+
+                <!-- Sau (AI Agent) -->
+                <div class="glass-panel rounded-2xl p-6 border-t-2 border-cyberGreen/30 flex flex-col justify-between glow-cyan">
+                    <div>
+                        <div class="flex justify-between items-center mb-6">
+                            <span class="px-3 py-1 rounded-full bg-cyberGreen/10 border border-cyberGreen/20 text-xs text-cyberGreen font-bold uppercase tracking-wider">AI AGENT (FUTURE)</span>
+                            <span class="text-2xl font-bold font-display text-cyberGreen">9 Phút</span>
+                        </div>
+                        <div class="space-y-4 text-sm text-gray-300">
+                            <div class="flex gap-2">
+                                <span class="text-cyberGreen">✓</span>
+                                <p>Tự động cắt ghép và chỉ hiển thị các mốc biến động lớn.</p>
+                            </div>
+                            <div class="flex gap-2">
+                                <span class="text-cyberGreen">✓</span>
+                                <p>Tự động phân tích sâu đa biến số toàn lobby bằng Computer Vision.</p>
+                            </div>
+                            <div class="flex gap-2">
+                                <span class="text-cyberGreen">✓</span>
+                                <p>Cơ chế <strong class="text-white">Suy luận ngược (Reverse Engineering)</strong> lý giải tư duy chiến thuật.</p>
+                            </div>
+                            <div class="flex gap-2">
+                                <span class="text-cyberGreen">✓</span>
+                                <p>Rút gọn 80% thời gian nghiên cứu nhưng nhân đôi hiệu quả tiếp thu.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="h-1 bg-cyberGreen/20 rounded-full mt-6 overflow-hidden">
+                        <div class="h-full bg-cyberGreen w-[20%]"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 6: Bảng So Sánh Các Công Cụ/Giải Pháp Khác -->
+        <section class="slide" data-topic="Thị Trường">
+            <div>
+                <span class="text-xs text-cyberCyan font-bold tracking-widest uppercase">Competitor Analysis</span>
+                <h2 class="font-display text-4xl font-bold mt-1">So Sánh Các Công Cụ Trên Thị Trường</h2>
+            </div>
+
+            <div class="my-auto max-w-5xl mx-auto w-full overflow-hidden rounded-xl border border-white/10 glass-panel">
+                <table class="w-full text-left text-sm">
+                    <thead class="bg-white/5 text-cyberCyan font-display font-semibold border-b border-white/10">
+                        <tr>
+                            <th class="p-4">CÔNG CỤ</th>
+                            <th class="p-4">PHƯƠNG PHÁP CỐT LÕI</th>
+                            <th class="p-4">KHÂU WORKFLOW GIẢI QUYẾT</th>
+                            <th class="p-4">KHOẢNG TRỐNG (GAP) TRÊN THỊ TRƯỜNG</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-white/5 text-gray-300">
+                        <!-- Insights.gg -->
+                        <tr class="hover:bg-white/5 transition">
+                            <td class="p-4 font-bold text-white">Insights.gg</td>
+                            <td class="p-4 text-xs">Nhận diện màn hình, phần mềm tự động gắn thẻ sự kiện</td>
+                            <td class="p-4 text-xs text-cyberGreen font-semibold">Cắt clip ngắn và trích xuất văn bản thao tác (Timestamp)</td>
+                            <td class="p-4 text-xs text-cyberRed/90"><i class="fa-solid fa-circle-xmark mr-1"></i> Chưa có khả năng suy luận và lý giải hành vi chiến thuật</td>
+                        </tr>
+                        <!-- Mobalytics -->
+                        <tr class="hover:bg-white/5 transition">
+                            <td class="p-4 font-bold text-white text-xs">Mobalytics &<br>iTero Gaming</td>
+                            <td class="p-4 text-xs">Kết nối API trò chơi, phân tích dữ liệu lớn & chiến thuật</td>
+                            <td class="p-4 text-xs text-cyberGreen font-semibold">Quét dữ liệu toàn trận và lập bản đồ các biến số</td>
+                            <td class="p-4 text-xs text-cyberRed/90"><i class="fa-solid fa-circle-xmark mr-1"></i> Phụ thuộc lớn vào API, cực kỳ khó áp dụng với video tĩnh</td>
+                        </tr>
+                        <!-- Trophi.ai -->
+                        <tr class="hover:bg-white/5 transition">
+                            <td class="p-4 font-bold text-white text-xs">Trophi.ai &<br>Hakko AI</td>
+                            <td class="p-4 text-xs">Computer Vision (nhận diện hình ảnh) kết hợp Machine Learning đối chiếu lỗi</td>
+                            <td class="p-4 text-xs text-cyberGreen font-semibold">Phân tích logic hành vi ở mức cơ bản (cảnh báo lỗi)</td>
+                            <td class="p-4 text-xs text-cyberRed/90"><i class="fa-solid fa-circle-xmark mr-1"></i> Thiếu suy luận ngược bối cảnh sâu; chi phí xử lý GPU cao</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="mt-4 text-center text-xs text-gray-500 max-w-2xl mx-auto">
+                ➔ <span class="text-cyberCyan font-semibold">Điểm độc bản của chúng tôi:</span> Kết hợp đồng thời sức mạnh nhận diện của Computer Vision và năng lực suy luận sâu của Reasoning Engine dựa trên logic game lý thuyết.
+            </div>
+        </section>
+
+        <!-- SLIDE 7: Mô Hình Kiến Trúc Giải Pháp -->
+        <section class="slide" data-topic="Kiến Trúc">
+            <div>
+                <span class="text-xs text-cyberCyan font-bold tracking-widest uppercase">System Architecture</span>
+                <h2 class="font-display text-4xl font-bold mt-1">Kiến Trúc Giải Pháp AI Agent Phân Tích VOD</h2>
+            </div>
+
+            <div class="my-auto grid grid-cols-12 gap-6 items-stretch max-w-5xl mx-auto w-full">
+                <!-- Input Layer -->
+                <div class="col-span-3 glass-panel rounded-2xl p-5 border border-white/10 flex flex-col justify-between text-center">
+                    <div>
+                        <span class="text-[10px] uppercase font-bold tracking-wider text-gray-400">ĐẦU VÀO (INPUT)</span>
+                        <div class="w-12 h-12 rounded-full bg-cyberCyan/10 border border-cyberCyan/30 text-cyberCyan flex items-center justify-center mx-auto my-6 text-xl">
+                            <i class="fa-solid fa-cloud-arrow-down"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm mb-1">Video VOD Đầu Vào</h4>
+                        <p class="text-[11px] text-gray-400">YouTube, Twitch hoặc Raw URL</p>
+                    </div>
+                </div>
+
+                <!-- Connective Arrow -->
+                <div class="col-span-1 flex items-center justify-center text-cyberCyan text-xl">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </div>
+
+                <!-- AI Agent Multi-Layer System -->
+                <div class="col-span-5 border border-dashed border-cyberCyan/50 rounded-2xl p-5 bg-cyberCyan/5 flex flex-col gap-4">
+                    <div class="text-center">
+                        <span class="text-xs font-bold text-cyberCyan tracking-wider uppercase">HỆ THỐNG AI AGENT ĐA PHÂN LỚP</span>
+                    </div>
+
+                    <!-- Sub-layer 1 -->
+                    <div class="p-3 bg-darkCard/80 border border-white/5 rounded-xl text-center">
+                        <div class="flex items-center gap-2 justify-center text-xs font-semibold text-white mb-1">
+                            <span class="w-1.5 h-1.5 rounded-full bg-cyberBlue"></span>
+                            1. Lớp Nhận Diện (Computer Vision & OCR)
+                        </div>
+                        <p class="text-[10px] text-gray-400">Trích xuất thời gian thực: Vàng, Máu, Lõi nâng cấp, Tướng, Hàng chờ</p>
+                    </div>
+
+                    <!-- Sub-layer 2 -->
+                    <div class="p-3 bg-darkCard/80 border border-white/5 rounded-xl text-center">
+                        <div class="flex items-center gap-2 justify-center text-xs font-semibold text-white mb-1">
+                            <span class="w-1.5 h-1.5 rounded-full bg-cyberGreen"></span>
+                            2. Lớp Dữ Liệu Nền (Knowledge Base)
+                        </div>
+                        <p class="text-[10px] text-gray-400">Cập nhật Patch hiện tại, Tỉ lệ thắng đội hình, Quy tắc cốt lõi trò chơi</p>
+                    </div>
+
+                    <!-- Sub-layer 3 -->
+                    <div class="p-3 bg-darkCard/80 border border-white/5 rounded-xl text-center">
+                        <div class="flex items-center gap-2 justify-center text-xs font-semibold text-cyberPurple mb-1">
+                            <span class="w-1.5 h-1.5 rounded-full bg-cyberPurple"></span>
+                            3. Lớp Suy Luận (Reasoning Engine)
+                        </div>
+                        <p class="text-[10px] text-gray-300">Phân tích đa biến số & Suy luận ngược bối cảnh sâu</p>
+                    </div>
+                </div>
+
+                <!-- Connective Arrow -->
+                <div class="col-span-1 flex items-center justify-center text-cyberCyan text-xl">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </div>
+
+                <!-- Output Layer -->
+                <div class="col-span-2 glass-panel rounded-2xl p-5 border border-cyberGreen/30 bg-cyberGreen/5 flex flex-col justify-between text-center">
+                    <div>
+                        <span class="text-[10px] uppercase font-bold tracking-wider text-cyberGreen">KẾT QUẢ (OUTPUT)</span>
+                        <div class="w-12 h-12 rounded-full bg-cyberGreen/10 border border-cyberGreen/30 text-cyberGreen flex items-center justify-center mx-auto my-6 text-xl">
+                            <i class="fa-solid fa-file-invoice"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-xs mb-1">Báo Cáo Chiến Thuật</h4>
+                        <p class="text-[10px] text-gray-400">Video cắt mốc & Lý giải quyết định vĩ mô</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 8: Giả Thuyết & Demo logic -->
+        <section class="slide" data-topic="Demo Logic">
+            <div>
+                <span class="text-xs text-cyberCyan font-bold tracking-widest uppercase">Deep Dive</span>
+                <h2 class="font-display text-4xl font-bold mt-1">Cơ Chế Hoạt Động & Suy Luận Ngược</h2>
+            </div>
+
+            <div class="my-auto grid grid-cols-12 gap-8 items-center max-w-5xl mx-auto w-full">
+                <!-- Case study -->
+                <div class="col-span-7 flex flex-col gap-6">
+                    <div class="glass-panel rounded-2xl p-6 border-l-4 border-cyberPurple/80">
+                        <span class="text-xs font-bold text-cyberPurple uppercase tracking-wider">VÍ DỤ VỀ LOGIC SUY LUẬN</span>
+                        <h3 class="font-bold text-2xl text-white mt-1 mb-4">"Roll mạnh tại vòng 3-2 vì lobby có 2 nhà trùng bài"</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed">
+                            Bằng cách quan sát toàn bộ sảnh đấu thông qua Computer Vision, AI nhận biết được có ít nhất 2 đối thủ khác đang có xu hướng xây dựng cùng một đội hình meta với người chơi (giành giật bể tướng chung).
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="p-4 rounded-xl bg-white/5 border border-white/5">
+                            <h4 class="text-xs text-gray-400 font-bold uppercase mb-1">Dữ liệu thô trích xuất</h4>
+                            <p class="text-xs text-gray-300">Nhận dạng có 2 tướng Karma 2 sao trên hàng chờ của nhà đối thủ tại vòng 3-1.</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-white/5 border border-white/5">
+                            <h4 class="text-xs text-gray-400 font-bold uppercase mb-1">Quyết định lý giải</h4>
+                            <p class="text-xs text-gray-300">Gợi ý người chơi xả tiền nâng cấp sớm để chiếm bể tướng trước khi cạn kiệt.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visual Mockup -->
+                <div class="col-span-5 glass-panel rounded-2xl p-6 border border-white/10 relative overflow-hidden">
+                    <div class="absolute -right-16 -top-16 w-32 h-32 bg-cyberPurple/10 rounded-full blur-2xl"></div>
+                    <div class="flex justify-between items-center mb-6">
+                        <span class="text-xs font-bold text-gray-400">VOD STREAM ANALYTICS</span>
+                        <span class="w-2 h-2 rounded-full bg-cyberGreen animate-ping"></span>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="h-10 rounded bg-white/5 border border-white/5 flex items-center justify-between px-3 text-xs">
+                            <span class="text-gray-400">Vòng đấu hiện tại:</span>
+                            <span class="text-cyberCyan font-bold">Stage 3-2</span>
+                        </div>
+                        <div class="h-10 rounded bg-white/5 border border-white/5 flex items-center justify-between px-3 text-xs">
+                            <span class="text-gray-400">Lượng vàng / Lợi tức:</span>
+                            <span class="text-yellow-400 font-bold">50 Gold (Lợi tức +5)</span>
+                        </div>
+                        <div class="h-10 rounded bg-white/5 border border-white/5 flex items-center justify-between px-3 text-xs">
+                            <span class="text-gray-400">Tỉ lệ trùng bài:</span>
+                            <span class="text-cyberRed font-bold">CAO (2 nhà trùng bài Karma)</span>
+                        </div>
+                        
+                        <div class="border-t border-white/10 pt-4 mt-2">
+                            <div class="text-[11px] text-cyberPurple font-bold uppercase tracking-wider mb-1">AI Recommendation / Insight</div>
+                            <p class="text-xs text-gray-300 italic leading-normal">
+                                "Đề xuất roll cạn tiền để cố định khung bài trước 2 nhà trùng bài, bỏ qua lợi tức vòng này để đảm bảo giữ máu."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Bottom Action Navigation -->
+    <footer class="fixed bottom-0 left-0 right-0 h-20 z-50 px-8 flex justify-between items-center border-t border-white/5 glass-panel">
+        <div class="flex items-center gap-2">
+            <button id="prev-btn" class="w-10 h-10 rounded-lg bg-gray-800 border border-gray-700 hover:bg-gray-700 hover:text-white transition flex items-center justify-center text-sm">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <button id="next-btn" class="w-10 h-10 rounded-lg bg-cyberCyan/10 border border-cyberCyan/30 hover:bg-cyberCyan/20 text-cyberCyan transition flex items-center justify-center text-sm">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+
+        <!-- Slide Indicators -->
+        <div class="flex items-center gap-2" id="slide-indicators-container">
+            <!-- Dynamically populated -->
+        </div>
+
+        <div>
+            <button id="fullscreen-btn" class="px-4 py-2 rounded-lg bg-white/5 border border-white/5 hover:bg-white/10 transition text-xs font-semibold text-gray-300 flex items-center gap-2">
+                <i class="fa-solid fa-expand"></i> Trình Chiếu Toàn Màn Hình
+            </button>
+        </div>
+    </footer>
+
+    <!-- JavaScript Controls -->
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const currentSlideNumSpan = document.getElementById('current-slide-num');
+        const totalSlideNumSpan = document.getElementById('total-slide-num');
+        const slideTopicSpan = document.getElementById('slide-topic');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const indicatorsContainer = document.getElementById('slide-indicators-container');
+        const fullscreenBtn = document.getElementById('fullscreen-btn');
+
+        let currentSlideIndex = 0;
+        const totalSlides = slides.length;
+
+        // Initialize Slider
+        totalSlideNumSpan.textContent = totalSlides;
+        
+        // Build indicators
+        slides.forEach((slide, idx) => {
+            const btn = document.createElement('button');
+            btn.className = `w-3 h-3 rounded-full transition-all duration-300 ${idx === 0 ? 'bg-cyberCyan w-6' : 'bg-gray-700'}`;
+            btn.addEventListener('click', () => {
+                goToSlide(idx);
+            });
+            indicatorsContainer.appendChild(btn);
+        });
+
+        const indicators = indicatorsContainer.querySelectorAll('button');
+
+        function updateSlideUI() {
+            slides.forEach((slide, idx) => {
+                if (idx === currentSlideIndex) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+
+            // Update indicators
+            indicators.forEach((indicator, idx) => {
+                if (idx === currentSlideIndex) {
+                    indicator.className = "w-3 h-3 rounded-full bg-cyberCyan w-6 transition-all duration-300";
+                } else {
+                    indicator.className = "w-3 h-3 rounded-full bg-gray-700 transition-all duration-300";
+                }
+            });
+
+            currentSlideNumSpan.textContent = currentSlideIndex + 1;
+            slideTopicSpan.textContent = slides[currentSlideIndex].getAttribute('data-topic');
+        }
+
+        function goToSlide(index) {
+            if (index >= 0 && index < totalSlides) {
+                currentSlideIndex = index;
+                updateSlideUI();
+            }
+        }
+
+        function nextSlide() {
+            if (currentSlideIndex < totalSlides - 1) {
+                currentSlideIndex++;
+            } else {
+                currentSlideIndex = 0; // Loop back
+            }
+            updateSlideUI();
+        }
+
+        function prevSlide() {
+            if (currentSlideIndex > 0) {
+                currentSlideIndex--;
+            } else {
+                currentSlideIndex = totalSlides - 1; // Loop to end
+            }
+            updateSlideUI();
+        }
+
+        // Click Event listeners
+        prevBtn.addEventListener('click', prevSlide);
+        nextBtn.addEventListener('click', nextSlide);
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+            }
+        });
+
+        // Fullscreen Toggle
+        fullscreenBtn.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch((err) => {
+                    console.error(`Error attempting to enable fullscreen: ${err.message}`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        });
+
+        // Initial UI update
+        updateSlideUI();
+    </script>
+</body>
+</html>
