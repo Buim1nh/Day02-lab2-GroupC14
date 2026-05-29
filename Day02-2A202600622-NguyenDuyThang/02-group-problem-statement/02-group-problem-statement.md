@@ -3,7 +3,7 @@
 ## 1. Group Convergence
 
 **Cluster các vấn đề từ cá nhân:**
-Nhóm gom các ý tưởng ban đầu thành 4 nhóm chính:
+Nhóm gom các ý tưởng ban đầu thành 5 nhóm chính:
 
 | Cluster | Candidate examples | Pattern chung |
 | --- | --- | --- |
@@ -11,6 +11,7 @@ Nhóm gom các ý tưởng ban đầu thành 4 nhóm chính:
 | Hỗ trợ học tập sinh viên | Kiểm tra lỗi lập luận, tìm tài liệu cũ trong Discord/Teams, xếp lịch học tín chỉ bằng Excel. | Nhu cầu rà soát lỗi logic văn bản, tra cứu thông tin cũ bị trôi, và tự động hóa quá trình lập kế hoạch cá nhân.
 | Tự động hóa xử lý dữ liệu nghiên cứu | TTrích xuất cột nhiệt độ/năng lượng từ hàng trăm file thô, lọc rác, định dạng xuất 500 file ảnh Gnuplot. | Giải quyết các thao tác cơ học lặp đi lặp lại trên khối lượng lớn dữ liệu, đòi hỏi độ chính xác tuyệt đối ở các số thập phân. |
 | Nhận diện và giải thích giao thông | Tra lại ý nghĩa biển báo, giải thích biển phụ và biển cấm theo giờ trong ngữ cảnh thực tế. |Chuyển đổi từ việc chỉ nhận diện hình ảnh (detect object) sang khả năng hiểu ngữ cảnh (contextual understanding) để hỗ trợ người đi đường.
+| Quản lý tài chính cá nhân | Trợ lý nhập liệu chi tiêu từ hóa đơn và chi phí cố định | Giải quyết bài toán nhập liệu thủ công lặp đi lặp lại, dữ liệu bị phân mảnh từ hóa đơn giấy/ảnh chụp màn hình, và lãng phí thời gian nhập các khoản chi định kỳ. |
 
 **Shortlist và Score:**
 
@@ -20,15 +21,20 @@ Nhóm gom các ý tưởng ban đầu thành 4 nhóm chính:
 | Tự động làm sạch & vẽ đồ thị (Gnuplot) | 5 | 5 | 5 | 5 | 4 | 5 | 5 | 34 |
 | Bot tìm kiếm tài liệu group chat học tập | 5 | 4 | 4 | 4 | 4 | 4 | 5 | 30 |
 | Trợ lý AI giải thích biển báo giao thông | 5 | 4 | 4 | 3 | 3 | 4 | 4 | 27 |
+| Trợ lý tự động hóa nhập liệu chi tiêu | 5 | 5 | 5 | 5 | 5 | 4 | 5 | 34 |
 
 **Nhóm chọn:** Phân tích VOD TFT.
 **Vì sao chọn:** Workflow cực kỳ rõ ràng, nỗi đau đủ lớn (tiêu tốn tới 45 phút cho mỗi video) và quan trọng nhất là tính khả thi khi so sánh phương án dùng AI (tạo bước đột phá lớn) với phương án Non-AI (gần như không thể giải quyết triệt để).
 
-**Vì sao không chọn các bài khác:** Tự động làm sạch & vẽ đồ thị (Gnuplot): Đã được xác định rõ là "No-Go cho Agent". Rủi ro ảo giác (AI đọc sai số thập phân, làm lệch dòng dữ liệu) sẽ phá hỏng hoàn toàn tính minh bạch khoa học. Bài toán này nên được giải quyết bằng Rule/Python Script cứng để đảm bảo chính xác 100% thay vì dùng AI.
+**Vì sao không chọn các bài khác:** 
+
+Tự động làm sạch & vẽ đồ thị (Gnuplot): Đã được xác định rõ là "No-Go cho Agent". Rủi ro ảo giác (AI đọc sai số thập phân, làm lệch dòng dữ liệu) sẽ phá hỏng hoàn toàn tính minh bạch khoa học. Bài toán này nên được giải quyết bằng Rule/Python Script cứng để đảm bảo chính xác 100% thay vì dùng AI.
 
 Bot tìm kiếm tài liệu group chat học tập: Rào cản lớn về phân quyền truy cập dữ liệu (data access) vào các kênh chat riêng tư. Phạm vi dễ bị trượt sang việc xây dựng một hệ thống RAG (Retrieval-Augmented Generation) khổng lồ vượt quá thời lượng của một buổi lab.
 
 Trợ lý AI giải thích biển báo giao thông: Thiếu tính khả thi để kiểm chứng (validate). Việc thử nghiệm một hệ thống AI nhận diện và suy luận luật giao thông trong điều kiện người dùng đang trực tiếp lái xe tiềm ẩn rủi ro an toàn quá lớn.
+
+Trợ lý tự động hóa nhập liệu chi tiêu: Bài toán có pain point rất thực tế nhưng gặp rào cản cực lớn về bảo mật dữ liệu (Privacy) và lòng tin của người dùng khi phải chia sẻ ảnh chụp hóa đơn, màn hình banking nhạy cảm. Đồng thời, hệ thống đối mặt với bài toán "Cold start" nghiêm trọng ở những tháng đầu tiên khi chưa có đủ lịch sử dữ liệu để AI nhận diện chính xác các pattern chi phí định kỳ. Việc giải quyết triệt để rào cản data access và xử lý các hóa đơn mờ, nhòe, viết tắt vượt quá phạm vi và thời gian cho phép của một buổi lab.
 
 ---
 
